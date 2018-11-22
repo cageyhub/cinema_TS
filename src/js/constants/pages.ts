@@ -1,0 +1,1 @@
+export const SEANCE_PAGE = 'seance';
