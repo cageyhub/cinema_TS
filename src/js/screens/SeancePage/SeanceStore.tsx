@@ -1,5 +1,9 @@
 import { observable, action } from 'mobx';
 import { getSeance as getSeanceApi } from '../../../api/api';
+import {
+	OCCUPED,
+	EMPTY
+} from '../../constants/titles';
 
 export interface ISeats {
 	id: number,
@@ -27,12 +31,13 @@ export interface ISeanceStore {
 	seance: ISeance;
 	getSeance(seanceId: number): void;
 	onSelectSeat(seat: any): void;
+	getSeatStatus(seat: number): string;
 }
 
 
 export class SeanceStore implements ISeanceStore {
-
-	@observable public activeSeats: ISeats[] = [];	
+	
+	@observable public activeSeats: ISeats[] = [];
 	@observable public seance: ISeance;
 
 	@action
@@ -47,17 +52,22 @@ export class SeanceStore implements ISeanceStore {
 
 	@action
 	public onSelectSeat = (seat: ISeats) => {	
-		const temp = this.activeSeats;	
 		const seatIndex = this.activeSeats.findIndex((item: any) => item.id === seat.id);
 		if (seatIndex === -1) {
 			const newSeat = { ...seat };
-			temp.push(newSeat);
+			this.activeSeats.push(newSeat);
 		} else {
-			temp.splice(seatIndex, 1);
+			this.activeSeats.splice(seatIndex, 1);
 		}
-		this.activeSeats = temp;
-		// tslint:disable-next-line:no-console
-		console.log("this.activeSeats", this.activeSeats);
+		;
+	}
+	@action
+	public getSeatStatus = (seatId: number) => {		
+		let isSeatOccuped;
+		if(this.activeSeats) {
+			isSeatOccuped = this.activeSeats.find((item: any) => item.id === seatId);
+		}
+		return isSeatOccuped ? OCCUPED : EMPTY;
 	}
 
 }

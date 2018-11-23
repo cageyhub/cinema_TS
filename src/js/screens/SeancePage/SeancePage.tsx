@@ -31,17 +31,18 @@ export class SeancePage extends React.Component<IProps> {
 	}
 
 	public render() {
-		const { seance, activeSeats, onSelectSeat } = this.props[SEANCE_STORE]!;
+		const { seance, activeSeats, onSelectSeat, getSeatStatus } = this.props[SEANCE_STORE]!;
 		// tslint:disable-next-line:no-console
-		console.log("render", activeSeats);
-		
+		// console.log("render", activeSeats.length);
+
 		return (
 			<main>
 				 <div className="seance">
 					{seance && <SeanceHall
 						seance={seance}
-						activeSeats={activeSeats}
+						activeSeats={activeSeats.length ? activeSeats : []}
 						onSelectSeat={onSelectSeat}
+						getSeatStatus={getSeatStatus}
 					/>}
 					</div>
 			

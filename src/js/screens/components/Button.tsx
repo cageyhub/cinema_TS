@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { IStyledProps } from '../../typings/props';
+import { EMPTY } from '../../constants/titles';
 
 interface IProps extends IStyledProps {
 	modifier: string;	
@@ -29,8 +30,17 @@ const ButtonComponent = (props: IProps) => {
 
 export const Button = styled(ButtonComponent)`
 	background-color: ${props =>
-    props.modifier === 'empty'
-      ? '#cccccc'
-      : '#550000'};	
+    props.modifier === EMPTY
+		? '#339dc6'
+		: '#ff7d38'};	
+		border: none;
+		border-radius: 2px;
+		color: #fff;
+		margin: 1px;
+		padding: 6px 10px; 
+		cursor: pointer;
+		:hover {
+			opacity: 0.85;
+		  }
 `
 

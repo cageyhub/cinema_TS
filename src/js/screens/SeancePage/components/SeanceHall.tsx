@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Title } from '../../components/Title';
-import { ISeance, ISeats } from '../SeanceStore';
+import {
+	ISeance,
+	ISeats
+} from '../SeanceStore';
 import { IStyledProps } from '../../../typings/props';
 import { Button } from '../../components/Button';
 
@@ -8,16 +11,13 @@ interface IProps extends IStyledProps{
 	seance: ISeance;
 	activeSeats: ISeats[];
 	onSelectSeat(seat:any): void;
-}
-
-const getSeatStatus = (seatId: number,  activeSeats: ISeats[]) => {		
-	const isSeatOccuped = activeSeats.find((item: any) => item.id === seatId);
-	return isSeatOccuped ? 'occuped' : 'empty';
+	getSeatStatus(seat:number): string;
 }
 
 export const SeanceHall = (props: IProps) => {
-	const { seance, onSelectSeat, activeSeats } = props;
+	const { seance, onSelectSeat, getSeatStatus } = props;
 	
+
 	return (
 		<div className="seance__hall">
 		<Title>{seance.name}</Title>
@@ -36,7 +36,7 @@ export const SeanceHall = (props: IProps) => {
 							<div key={seat.id}>
 							<Button
 								key={seat.id}
-								modifier={getSeatStatus(seat.id, activeSeats)}
+								modifier={getSeatStatus(seat.id)}
 								onClick={onSelectSeat}
 								targetValue={seat}
 								value={index + 1}
