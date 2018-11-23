@@ -1,7 +1,7 @@
 import {
 	MOVIE_STORE,
 	SEANCE_STORE
-} from './js/constant';
+} from './js/constants/store';
 import { MovieStore } from './js/screens/MoviesPage/MovieStore';
 import { SeanceStore } from './js/screens/SeancePage/SeanceStore';
 

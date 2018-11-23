@@ -1,54 +1,76 @@
 import * as React from 'react';
 import { inject, observer  } from 'mobx-react';
-import './SeancePage.css';
-
-// import { StatusPanel } from './components/StatusPanel';
+import styled from 'styled-components';
 import { SeanceHall } from './components/SeanceHall';
-
-import { SEANCE_STORE } from '../../constant';
-import { ISeanceStore, ISeats } from './SeanceStore';
-
-// const getRowNum = seatId => Math.floor(seatId / 100);
-
-// const getSeatNum = seatId => seatId % 100;
-
+import { StatusPanel } from './components/StatusPanel';
+import { SEANCE_STORE } from '../../constants/store';
+import { ISeanceStore, ISeat } from './SeanceStore';
 
 interface IProps {
 	[SEANCE_STORE]?: ISeanceStore;
 	match: any;
-	activeSeats: ISeats[];
+	activeSeats: ISeat[];
+	seanceId: number;
 }
 
 @inject(SEANCE_STORE)
 @observer
 export class SeancePage extends React.Component<IProps> {
-	constructor(props: any) {
-		super(props)
-	}
+
+	public seanceId: number;
 	
 	public componentDidMount() {
-		this.props[SEANCE_STORE]!.getSeance(this.props.match.params.id);
+		this.seanceId = this.props.match.params.id;
+		this.props[SEANCE_STORE]!.getSeance(this.seanceId);
 	}
 
 	public render() {
-		const { seance, activeSeats, onSelectSeat, getSeatStatus } = this.props[SEANCE_STORE]!;
-		// tslint:disable-next-line:no-console
-		// console.log("render", activeSeats.length);
+		const {
+			seance,
+			activeSeats,
+			onSelectSeat,
+			getSeatStatus,
+			getFullPrice,
+			onDeleteSeat,
+			onDeleteAllSeats,
+			onSendOrder,
+			getRowNum,
+			getSeatNum,
+		} = this.props[SEANCE_STORE]!;
 
 		return (
-			<main>
-				 <div className="seance">
-					{seance && <SeanceHall
-						seance={seance}
-						activeSeats={activeSeats.length ? activeSeats : []}
-						onSelectSeat={onSelectSeat}
-						getSeatStatus={getSeatStatus}
-					/>}
-					</div>
-			
-			</main>
-
+			<>
+				<Seance>
+					{seance && 
+					<>
+						<SeanceHall
+							seance={seance}
+							activeSeats={activeSeats.length ? activeSeats : []}
+							onSelectSeat={onSelectSeat}
+							getSeatStatus={getSeatStatus}
+						/>					
+						<StatusPanel
+							activeSeats={activeSeats.length ? activeSeats : []}
+							getRowNum={getRowNum}
+							getSeatNum={getSeatNum}
+							getFullPrice={getFullPrice}
+							onDeleteSeat={onDeleteSeat}
+							onDeleteAllSeats={onDeleteAllSeats}
+							onSendOrder={onSendOrder}
+							seanceId={this.seanceId}
+						/>
+					</>
+				}
+				</Seance>			
+			</>
 		);
 	}
 }
 
+const Seance = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;		
+	padding: 2%;
+`;

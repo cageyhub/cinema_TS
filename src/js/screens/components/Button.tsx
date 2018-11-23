@@ -4,11 +4,11 @@ import { IStyledProps } from '../../typings/props';
 import { EMPTY } from '../../constants/titles';
 
 interface IProps extends IStyledProps {
-	modifier: string;	
-	targetValue: string | object;
-	title: string;
-	value: string | number;
-	onClick(targetValue: string | object): void;
+	modifier?: string;	
+	targetValue?: any;
+	title?: string;
+	value?: string | number;
+	onClick(targetValue?: any): void;
 }
 
 const ButtonComponent = (props: IProps) => {
