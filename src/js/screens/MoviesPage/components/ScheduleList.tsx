@@ -39,7 +39,7 @@ export const ScheduleList = styled(ScheduleListComponent)`
 	font-size: 14px;
 	height: 100%;
 	padding: 0 3px;
-	margin-right: 20px;
+	margin: 0 20px;
 	cursor: pointer;
 `;
 

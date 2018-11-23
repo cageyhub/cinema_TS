@@ -7,6 +7,11 @@ import { ScheduleList } from './ScheduleList';
 import { Poster } from './Poster';
 import { Date } from './Date';
 
+const MovieInfo = styled.div`
+	display: flex;
+	
+`;
+
 interface IProps extends IStyledProps{
 	movie: IMovie;
 }
@@ -19,10 +24,10 @@ const MovieItemComponent = (props: IProps) => {
 		<div>
 			<SubTitle>{movie.title}</SubTitle>
 			<Date>{movie.date}</Date>
-			<div className="show">
-				<div className="show__techno">{movie.techno}</div>				
+			<MovieInfo>
+				<div>{movie.techno}</div>				
 				<ScheduleList schedule={movie.schedule} />
-			</div>
+			</MovieInfo>
 		</div>
 	</div>
 )}
@@ -30,7 +35,7 @@ const MovieItemComponent = (props: IProps) => {
 export const MovieItem = styled(MovieItemComponent)`
 	display: flex;
 	justify-content: row;
-	width: 70%;
+	width: 100%;
 	background-color: #eeeeee;
 	padding: 20px;
 	margin: 15px auto;

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { inject, observer  } from 'mobx-react';
+import styled from 'styled-components';
 import { MOVIE_STORE } from '../../constants/store';
 import { MovieItem } from './components/MovieItem';
 import { IMovieStore, IMovie } from './MovieStore';
@@ -23,7 +24,7 @@ export class MoviesPage extends React.Component<IProps> {
 		const { movies } = this.props[MOVIE_STORE]!;
 		
 		return (
-			<>
+			<MovieWrapper>
 				<Title>Movies</Title>
 				{movies && movies.map((movie) => (
 					<MovieItem
@@ -31,9 +32,15 @@ export class MoviesPage extends React.Component<IProps> {
 						key={movie.id}
 					/>
 				))}
-			</>
+			</MovieWrapper>
 		);
 	}
 };
+
+const MovieWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+`;
 
 
